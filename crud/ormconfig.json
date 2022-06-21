@@ -1,0 +1,21 @@
+[
+  {
+    "name": "nodeCrud",
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "Lucas7x!",
+    "database": "nodeCrud",
+    "entities": [
+      "./src/models/**/*.ts"
+    ],
+    "migrations": [
+      "./src/migrations/*.ts"
+    ],
+    "migrationsDir": "./src/migrations/",
+    "cli": {
+      "migrationsDir": "./src/migrations/"
+    }
+  }
+]
