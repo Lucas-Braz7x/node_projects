@@ -2,8 +2,8 @@ import 'reflect-metadata';
 import express from 'express';
 //import axios from 'axios';
 import cors from 'cors';
-
-import routes from './shared/http/routes/index';
+import '@shared/typeOrm';
+import routes from '@shared/http/routes/index';
 
 const app = express();
 
