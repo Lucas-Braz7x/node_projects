@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import express from 'express';
 //import axios from 'axios';
+import 'express-async-errors';
 import cors from 'cors';
 import '@shared/typeOrm';
 import routes from '@shared/http/routes/index';
