@@ -1,3 +1,4 @@
+import { isAuthenticated } from '@shared/middlewares/isAuthenticated';
 import { ProductController } from '@modules/controller/ProductController';
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
@@ -7,7 +8,6 @@ import { SessionController } from '@modules/controller/SessionController';
 const productController = new ProductController();
 const userController = new UserController();
 const sessionController = new SessionController();
-
 const routes = Router();
 
 routes.get('/products', productController.index);
@@ -56,7 +56,7 @@ routes.delete(
   productController.delete,
 );
 
-routes.get('/users', userController.index);
+routes.get('/users', isAuthenticated, userController.index);
 
 routes.post(
   '/users',
