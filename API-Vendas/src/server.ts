@@ -1,3 +1,4 @@
+import { handleError } from './shared/middlewares/handleError';
 import 'reflect-metadata';
 import express from 'express';
 //import axios from 'axios';
@@ -13,6 +14,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(routes);
+
+app.use(handleError);
 
 app.use(errors());
 

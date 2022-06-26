@@ -1,4 +1,3 @@
-import 'express-async-errors';
 export class AppError {
   public readonly message: string;
   public readonly statusCode: number;
