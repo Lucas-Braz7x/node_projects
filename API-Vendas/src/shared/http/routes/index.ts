@@ -1,14 +1,20 @@
+import { upload } from '@config/upload';
+import { UserAvatarController } from './../../../modules/controller/UserAvatarController';
 import { isAuthenticated } from '@shared/middlewares/isAuthenticated';
 import { ProductController } from '@modules/controller/ProductController';
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import { UserController } from '@modules/controller/UserController';
 import { SessionController } from '@modules/controller/SessionController';
+import multer from 'multer';
 
 const productController = new ProductController();
 const userController = new UserController();
 const sessionController = new SessionController();
+const userAvatarController = new UserAvatarController();
 const routes = Router();
+
+const uploadConfig = multer(upload);
 
 routes.get('/products', productController.index);
 
@@ -79,6 +85,13 @@ routes.post(
     },
   }),
   sessionController.create,
+);
+
+routes.patch(
+  '/avatar',
+  isAuthenticated,
+  uploadConfig.single('avatar'),
+  userAvatarController.update,
 );
 
 export default routes;
