@@ -7,15 +7,20 @@ import { celebrate, Joi, Segments } from 'celebrate';
 import { UserController } from '@modules/controller/UserController';
 import { SessionController } from '@modules/controller/SessionController';
 import multer from 'multer';
+import { ForgotPasswordController } from '@modules/controller/ForgotPasswordController';
+import { ResetPasswordController } from '@modules/controller/ResetPasswordController copy';
 
 const productController = new ProductController();
 const userController = new UserController();
 const sessionController = new SessionController();
 const userAvatarController = new UserAvatarController();
+const forgotPasswordController = new ForgotPasswordController();
+const resetPasswordController = new ResetPasswordController();
 const routes = Router();
 
 const uploadConfig = multer(upload);
 
+//Products
 routes.get('/products', productController.index);
 
 routes.get(
@@ -62,6 +67,7 @@ routes.delete(
   productController.delete,
 );
 
+//User
 routes.get('/users', isAuthenticated, userController.index);
 
 routes.post(
@@ -87,11 +93,37 @@ routes.post(
   sessionController.create,
 );
 
+//Avatar
 routes.patch(
   '/avatar',
   isAuthenticated,
   uploadConfig.single('avatar'),
   userAvatarController.update,
+);
+
+//Password
+routes.post(
+  '/password/forgot',
+  celebrate({
+    [Segments.BODY]: {
+      email: Joi.string().email().required(),
+    },
+  }),
+  forgotPasswordController.create,
+);
+
+routes.post(
+  '/password/reset',
+  celebrate({
+    [Segments.BODY]: {
+      token: Joi.string().uuid().required(),
+      password: Joi.string().required(),
+      password_confirmation: Joi.string()
+        .required()
+        .valid(Joi.ref('password')),
+    },
+  }),
+  resetPasswordController.create,
 );
 
 export default routes;
