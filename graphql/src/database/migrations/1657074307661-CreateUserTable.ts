@@ -1,11 +1,64 @@
-import { MigrationInterface, QueryRunner } from "typeorm"
+/* eslint-disable class-methods-use-this */
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class CreateUserTable1657074307661 implements MigrationInterface {
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.createTable(new Table({
+      name: 'user',
+      columns: [
+        {
+          name: 'id',
+          type: 'uuid',
+          isPrimary: true,
+          generationStrategy: 'uuid',
+          default: 'uuid_generate_v4()',
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-    }
+        },
+        {
+          name: 'name',
+          type: 'varchar',
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-    }
+        },
+        {
+          name: 'email',
+          type: 'varchar',
+          isUnique: true,
+        },
+        {
+          name: 'github_name',
+          type: 'varchar',
+          isUnique: true,
+        },
+        {
+          name: 'age',
+          type: 'integer',
+        },
+        {
+          name: 'avatar',
+          type: 'varchar',
+          isNullable: true,
+        },
+        {
+          name: 'password',
+          type: 'varchar',
 
+        },
+        {
+          name: 'created_at',
+          type: 'timestamp with time zone',
+          default: 'now()',
+        },
+        {
+          name: 'updated_at',
+          type: 'timestamp with time zone',
+          default: 'now()',
+        },
+
+      ],
+    }));
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable('user');
+  }
 }

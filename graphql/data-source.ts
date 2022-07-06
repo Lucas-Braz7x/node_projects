@@ -10,7 +10,7 @@ export const AppDataSource = new DataSource({
   database: 'graphql',
   synchronize: false,
   logging: false,
-  entities: ['./src/database/migrations/*.ts'],
+  entities: ['./src/database/models/*.ts'],
   subscribers: [],
   migrations: [
     './src/database/migrations/*.ts',
@@ -18,5 +18,5 @@ export const AppDataSource = new DataSource({
 });
 
 AppDataSource.initialize()
-  .then(() => { console.log('BAnco rodando'); })
+  .then(() => { console.log('Banco rodando'); })
   .catch((er) => console.log(`Deu merda ${er}`));
