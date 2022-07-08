@@ -1,13 +1,9 @@
 import { DataSource } from 'typeorm';
-import 'dotenv/config';
+import { DatabaseConfig } from './keys';
 
 export const AppDataSource = new DataSource({
+  ...DatabaseConfig,
   type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'postgres',
-  password: 'docker',
-  database: 'graphql',
   synchronize: false,
   logging: false,
   entities: ['./src/database/models/*.ts'],
