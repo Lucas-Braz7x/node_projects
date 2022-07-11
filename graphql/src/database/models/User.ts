@@ -1,4 +1,6 @@
-import { Field, ID, ObjectType } from 'type-graphql';
+import {
+  Field, ID, Int, ObjectType,
+} from 'type-graphql';
 import {
   Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn,
 } from 'typeorm';
@@ -11,27 +13,27 @@ export class User {
     id: string;
 
   @Column()
-  @Field()
+  @Field(() => String!)
     name: string;
 
   @Column()
-  @Field()
+  @Field(() => String!)
     email: string;
 
   @Column()
-  @Field()
+  @Field(() => String!)
     github_name: string;
 
   @Column()
-  @Field()
+  @Field(() => Int)
     age: number;
 
   @Column()
-  @Field()
+  @Field(() => String!)
     avatar: string;
 
   @Column()
-  @Field()
+  @Field(() => String!)
     password: string;
 
   @CreateDateColumn()
