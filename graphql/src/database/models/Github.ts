@@ -1,6 +1,7 @@
 import {
   Field, ID, ObjectType,
 } from 'type-graphql';
+import { JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { GithubRepos } from './GithubRepos';
 // import { GithubRepos } from './GithubRepos';
 import { User } from './User';
@@ -23,6 +24,7 @@ export class Github {
 
 @ObjectType()
 export class Github {
+  @PrimaryGeneratedColumn('uuid')
   @Field(() => ID)
     id: string;
 
@@ -38,9 +40,8 @@ export class Github {
   @Field(() => String!)
     url: string;
 
+  @OneToOne(() => User)
+  @JoinColumn({ name: 'login' })
   @Field(() => [GithubRepos], { nullable: true })
     repos: GithubRepos[];
-
-  @Field(() => User)
-    user: string;
 }

@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+import 'reflect-metadata';
 import {
   Arg,
   Mutation,
@@ -5,9 +7,8 @@ import {
 } from 'type-graphql';
 import { User } from '../models/User';
 import { UserRepository } from '../repositories/UserRepository';
-import 'reflect-metadata';
 
-@Resolver()
+@Resolver(() => User)
 export class UserResolver {
   @Query(() => [User])
   async users() {
@@ -44,7 +45,6 @@ export class UserResolver {
     });
 
     await UserRepository.save(user);
-
     return user;
   }
 
@@ -74,5 +74,14 @@ export class UserResolver {
     await UserRepository.save(user);
 
     return user;
+  }
+
+  @Mutation(() => User)
+  async deleteUser(@Arg('id') id: string): Promise<void> {
+    const user = await UserRepository.findById(id);
+
+    if (!user) throw new Error('User does not exist');
+
+    await UserRepository.remove(user);
   }
 }

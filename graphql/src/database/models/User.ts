@@ -21,7 +21,7 @@ export class User {
     email: string;
 
   @Column()
-  @Field(() => String!)
+  @Field(() => String!, { nullable: true })
     github_name: string;
 
   @Column()
